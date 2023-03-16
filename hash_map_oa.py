@@ -118,7 +118,7 @@ class HashMap:
         return count
 
     def resize_table(self, new_capacity: int) -> None:
-        j = 0
+
         if new_capacity < self._size:
             return
         if new_capacity <1:
@@ -131,6 +131,7 @@ class HashMap:
         for _ in range(new_capacity):
             temp_da.append(None)
         for index in range(self._buckets.length()):
+            j = 0
             if self._buckets[index] is not None:
                 hash = self._hash_function(self._buckets[index].key)
                 indexes = hash % new_capacity

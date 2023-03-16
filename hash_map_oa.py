@@ -92,12 +92,12 @@ class HashMap:
         hash_entry = HashEntry(key, value)
         hash = self._hash_function(key)
         index = hash % self._capacity
-        j = 1
+        j = 0
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
                 self._buckets[index] = hash_entry
                 return
-            index = (index + (j *j)) % self._capacity
+            index = (index + (j *j)) % (self._capacity - self._size)
             j +=1
         self._buckets[index] = hash_entry
         self._size +=1
@@ -131,7 +131,7 @@ class HashMap:
         for _ in range(new_capacity):
             temp_da.append(None)
         for index in range(self._buckets.length()):
-            j = 0
+            j = 1
             if self._buckets[index] is not None:
                 hash = self._hash_function(self._buckets[index].key)
                 indexes = hash % new_capacity

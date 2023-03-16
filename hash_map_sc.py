@@ -166,10 +166,11 @@ class HashMap:
         return False
 
     def remove(self, key: str) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        for index in range(self._buckets.length()):
+            linked_list = self._buckets[index]
+            if self.contains_key(key) != None:
+                linked_list.remove(key)
+        self._size -=1
 
     def get_keys_and_values(self) -> DynamicArray:
         """

@@ -171,15 +171,15 @@ class HashMap:
 
     def remove(self, key: str) -> None:
         """removes value from hashmap"""
+        hash = self._hash_function(key)
+        index = hash % self._buckets.length()
         count = 0
-        for index in range(self._buckets.length()):
-            linked_list = self._buckets[index]
-            if self._buckets[index].contains(key) != None:
-                count +=1
-                linked_list.remove(key)
-                break
-        if count ==1:
-            self._size -=1
+        if self._buckets[index].contains(key) != None:
+            count +=1
+            self._buckets[index].remove(key)
+        if count == 1:
+            self._size -= 1
+
 
 
     def get_keys_and_values(self) -> DynamicArray:

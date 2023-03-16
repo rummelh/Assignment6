@@ -123,6 +123,8 @@ class HashMap:
         """clears hashmap"""
         self._buckets = DynamicArray()
         self._size = 0
+        for _ in range(self._capacity):
+            self._buckets.append(LinkedList())
 
     def resize_table(self, new_capacity: int) -> None:
         """resizes the table to double capacity or next prime if double capacity is not prime number"""

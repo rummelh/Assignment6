@@ -128,7 +128,7 @@ class HashMap:
 
     def resize_table(self, new_capacity: int) -> None:
         """resizes the table to double capacity or next prime if double capacity is not prime number"""
-        if new_capacity < 1:
+        if new_capacity <= 1:
             return
         if self._is_prime(new_capacity) == False:
             new_capacity = self._next_prime(new_capacity)

@@ -169,7 +169,7 @@ class HashMap:
         count = 0
         for index in range(self._buckets.length()):
             linked_list = self._buckets[index]
-            if self.contains_key(key) != None:
+            if self._buckets[index].contains(key) != None:
                 count +=1
                 linked_list.remove(key)
         if count ==1:

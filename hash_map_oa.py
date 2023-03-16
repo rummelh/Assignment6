@@ -86,15 +86,22 @@ class HashMap:
     # ------------------------------------------------------------------ #
 
     def put(self, key: str, value: object) -> None:
+        load_factor = self.table_load()
+        if load_factor >= 0.5:
+            self.resize_table(self._capacity *2)
         hash_entry = HashEntry(key, value)
         hash = self._hash_function(key)
         index = hash % self._buckets.length()
         j = 1
-        while self._buckets[index] != None:
-            index = index + (j *j)
+        while self._buckets[index] is not None:
+            if self._buckets[index].key == key:
+                self._buckets[index] = hash_entry
+                return
+            index = (index + (j *j)) % self._capacity
             j +=1
         self._buckets[index] = hash_entry
-        pass
+        self._size +=1
+
 
     def table_load(self) -> float:
         """returns load factor of table"""
@@ -110,10 +117,28 @@ class HashMap:
         pass
 
     def resize_table(self, new_capacity: int) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        j = 0
+        if new_capacity < self._size:
+            return
+        if new_capacity <1:
+            return
+        if self._is_prime(new_capacity) == False:
+            new_capacity = self._next_prime(new_capacity)
+        else:
+            new_capacity = new_capacity
+        temp_da = DynamicArray()
+        for _ in range(new_capacity):
+            self._buckets.append(None)
+        for index in range(self._buckets.length()):
+            if self._buckets[index] is not None:
+                hash = self._hash_function(self._buckets[index].key)
+                indexes = hash % (self._capacity *2)
+                while temp_da[indexes] is not None:
+                    indexes = (indexes + (j * j)) % temp_da.length()
+                    j += 1
+                temp_da[indexes] = self._buckets[index]
+        self._buckets = temp_da
+        self._capacity = new_capacity
 
     def get(self, key: str) -> object:
         """

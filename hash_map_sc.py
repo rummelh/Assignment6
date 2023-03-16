@@ -181,7 +181,6 @@ class HashMap:
             self._size -= 1
 
 
-
     def get_keys_and_values(self) -> DynamicArray:
         """returns a dynamic array containing a tuple of  keys and values"""
         new_arr = DynamicArray()

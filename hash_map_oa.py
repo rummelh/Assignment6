@@ -86,16 +86,22 @@ class HashMap:
     # ------------------------------------------------------------------ #
 
     def put(self, key: str, value: object) -> None:
+        hash_entry = HashEntry(key, value)
         hash = self._hash_function(key)
         index = hash % self._buckets.length()
-        if self._buckets[index] == None:
-            self._buckets[index] =
+        j = 1
+        while self._buckets[index] != None:
+            index = index + (j *j)
+            j +=1
+        self._buckets[index] = hash_entry
+        pass
 
     def table_load(self) -> float:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """returns load factor of table"""
+        n = self.get_size()
+        m = self._buckets.length()
+        load_factor = n/m
+        return load_factor
 
     def empty_buckets(self) -> int:
         """

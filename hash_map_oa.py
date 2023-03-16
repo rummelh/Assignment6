@@ -91,7 +91,7 @@ class HashMap:
             self.resize_table(self._capacity *2)
         hash_entry = HashEntry(key, value)
         hash = self._hash_function(key)
-        index = hash % self._buckets.length()
+        index = hash % self._capacity
         j = 1
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
@@ -111,10 +111,11 @@ class HashMap:
         return load_factor
 
     def empty_buckets(self) -> int:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        count = 0
+        for index in range(self._buckets.length()):
+            if self._buckets[index] == None:
+                count +=1
+        return count
 
     def resize_table(self, new_capacity: int) -> None:
         j = 0
@@ -128,7 +129,7 @@ class HashMap:
             new_capacity = new_capacity
         temp_da = DynamicArray()
         for _ in range(new_capacity):
-            self._buckets.append(None)
+            temp_da.append(None)
         for index in range(self._buckets.length()):
             if self._buckets[index] is not None:
                 hash = self._hash_function(self._buckets[index].key)

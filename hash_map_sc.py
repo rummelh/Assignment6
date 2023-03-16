@@ -120,10 +120,9 @@ class HashMap:
         return load_factor
 
     def clear(self) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """clears hashmap"""
+        self._buckets = DynamicArray()
+        self._size = 0
 
     def resize_table(self, new_capacity: int) -> None:
         """resizes the table to double capacity or next prime if double capacity is not prime number"""

@@ -177,12 +177,18 @@ class HashMap:
             self._size -=1
 
 
-
     def get_keys_and_values(self) -> DynamicArray:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """returns a dynamic array containing a tuple of  keys and values"""
+        new_arr = DynamicArray()
+        for indexs in range(self._buckets.length()):
+            linked_list = self._buckets[indexs]
+            for nodes in linked_list:
+                key = nodes.key
+                value = nodes.value
+                if key != None:
+                    new_arr.append((key,value))
+        return new_arr
+
 
 
 def find_mode(da: DynamicArray) -> (DynamicArray, int):

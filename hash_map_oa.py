@@ -133,7 +133,7 @@ class HashMap:
         for index in range(self._buckets.length()):
             if self._buckets[index] is not None:
                 hash = self._hash_function(self._buckets[index].key)
-                indexes = hash % (self._capacity *2)
+                indexes = hash % new_capacity
                 while temp_da[indexes] is not None:
                     indexes = (indexes + (j * j)) % temp_da.length()
                     j += 1

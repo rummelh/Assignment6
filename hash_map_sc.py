@@ -151,21 +151,26 @@ class HashMap:
 
     def get(self, key: str):
         """returns value of given key or None if doesn't exist"""
-        for index in range(self._buckets.length()):
-            if self._buckets[index].contains(key) != None:
-                node = self._buckets[index].contains(key)
-                val = node.value
-                return val
+        hash = self._hash_function(key)
+        index = hash % self._buckets.length()
+        if self._buckets[index].contains(key) != None:
+            node = self._buckets[index].contains(key)
+            val = node.value
+            return val
         return None
+
 
     def contains_key(self, key: str) -> bool:
         """returns true if key is in bucket and false otherwise"""
-        for index in range(self._buckets.length()):
-            if self._buckets[index].contains(key) != None:
-                return True
+        hash = self._hash_function(key)
+        index = hash % self._buckets.length()
+        if self._buckets[index].contains(key) != None:
+            return True
         return False
 
+
     def remove(self, key: str) -> None:
+        """removes value from hashmap"""
         count = 0
         for index in range(self._buckets.length()):
             linked_list = self._buckets[index]

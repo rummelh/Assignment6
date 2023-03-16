@@ -86,10 +86,10 @@ class HashMap:
     # ------------------------------------------------------------------ #
 
     def put(self, key: str, value: object) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        hash = self._hash_function(key)
+        index = hash % self._buckets.length()
+        if self._buckets[index] == None:
+            self._buckets[index] =
 
     def table_load(self) -> float:
         """

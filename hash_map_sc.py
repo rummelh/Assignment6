@@ -150,16 +150,20 @@ class HashMap:
 
 
     def get(self, key: str):
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """returns value of given key or None if doesn't exist"""
+        for index in range(self._buckets.length()):
+            if self._buckets[index].contains(key) != None:
+                node = self._buckets[index].contains(key)
+                val = node.value
+                return val
+        return None
 
     def contains_key(self, key: str) -> bool:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """returns true if key is in bucket and false otherwise"""
+        for index in range(self._buckets.length()):
+            if self._buckets[index].contains(key) != None:
+                return True
+        return False
 
     def remove(self, key: str) -> None:
         """

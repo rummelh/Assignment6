@@ -89,31 +89,31 @@ class HashMap:
     # ------------------------------------------------------------------ #
 
     def put(self, key: str, value: object) -> None:
-        """updates key/value pair in hash map"""
+        """updates key/value pair in hash map or inserts if not already in"""
         load_factor = self.table_load()
         if load_factor >= 1:
             self.resize_table(self._capacity *2)
-        hash = hash_function_1(key)
+        hash = self._hash_function(key)
         #gets where to put key/value in dynamic array
         index = hash % self._buckets.length()
         #index in dynamic array
-        if self._buckets[index] is None:
-            linked_list = LinkedList()
-            self._buckets[index] = linked_list.insert(key,value)
-        linked_list = LinkedList()
-        self._buckets[index] = linked_list.insert(key,value)
-        #adds a linked list with given key/value at specified index
-        self._size += 1
-
+        if self._buckets[index].contains(key):
+            self._buckets[index].remove(key)
+            self._buckets[index].insert(key,value)
+        else:
+            self._buckets[index].insert(key,value)
+            self._size += 1
 
     def empty_buckets(self) -> int:
+        """returns number of empty buckets"""
         count = 0
         for index in range(self._buckets.length()):
-            if self._buckets[index] is None:
+            if self._buckets[index].length() == 0:
                 count += 1
         return count
 
     def table_load(self) -> float:
+        """returns load factor of table"""
         n = self.get_size()
         m = self._buckets.length()
         load_factor = n/m
@@ -126,16 +126,26 @@ class HashMap:
         pass
 
     def resize_table(self, new_capacity: int) -> None:
+        """resizes the table to double capacity or next prime if double capacity is not prime number"""
         if new_capacity < 1:
             return
         if self._is_prime(new_capacity) == False:
-            self._next_prime(new_capacity)
+            new_capacity = self._next_prime(new_capacity)
         else:
-            self._capacity = new_capacity
-            for index in range(self._buckets.length()):
-                hash = hash_function_1(key)
-                # gets where to put key/value in dynamic array
-                index = hash % self._buckets.length()
+            new_capacity = new_capacity
+        temp_da = DynamicArray()
+        for _ in range(new_capacity):
+            temp_da.append(LinkedList())
+        for indexs in range(self._buckets.length()):
+            linked_list = self._buckets[indexs]
+            for nodes in linked_list:
+                key = nodes.key
+                value = nodes.value
+                hash = self._hash_function(key)
+                index = hash % temp_da.length()
+                temp_da[index].insert(key, value)
+        self._buckets = temp_da
+        self._capacity = new_capacity
 
 
     def get(self, key: str):

@@ -3,7 +3,7 @@
 # Course: CS261 - Data Structures
 # Assignment: 6
 # Due Date: 3/17/2023
-# Description:
+# Description: hashmap with sc implementation
 
 
 from a6_include import (DynamicArray, LinkedList,

@@ -1,9 +1,9 @@
-# Name:
-# OSU Email:
+# Name: Hannah Rummel
+# OSU Email: rummelh@oregonstate.edu
 # Course: CS261 - Data Structures
-# Assignment:
-# Due Date:
-# Description:
+# Assignment: 6
+# Due Date: 3/17/23
+# Description: hashmap with oa implementation
 
 from a6_include import (DynamicArray, DynamicArrayException, HashEntry,
                         hash_function_1, hash_function_2)
@@ -192,6 +192,7 @@ class HashMap:
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
                 self._buckets[index].is_tombstone = True
+                self._size -= 1
                 return
             if og_index + j ** 2 >= self._buckets.length():
                 index = (og_index + j ** 2) % self._capacity

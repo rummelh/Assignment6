@@ -183,10 +183,22 @@ class HashMap:
         return False
 
     def remove(self, key: str) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        hash = self._hash_function(key)
+        index = hash % self._buckets.length()
+        og_index = hash % self._buckets.length()
+        j = 1
+        if self.get(key) is None:
+            return None
+        while self._buckets[index] is not None:
+            if self._buckets[index].key == key:
+                self._buckets.set_at_index(index, "_TS_")
+                return
+            if og_index + j ** 2 >= self._buckets.length():
+                index = (og_index + j ** 2) % self._capacity
+            else:
+                index = og_index + j ** 2
+            j += 1
+
 
     def clear(self) -> None:
         """clears hashmap"""

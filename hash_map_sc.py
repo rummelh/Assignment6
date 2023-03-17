@@ -196,12 +196,28 @@ class HashMap:
 
 
 def find_mode(da: DynamicArray) -> (DynamicArray, int):
-    """
-    TODO: Write this implementation
-    """
+    """finds mode value in a dynamic array"""
     # if you'd like to use a hash map,
     # use this instance of your Separate Chaining HashMap
     map = HashMap()
+    for values in range(da.length()):
+        if map.contains_key(da[values]):
+            map.put(da[values], map.get(da[values]) + 1)
+        else:
+            map.put(da[values], 1)
+    done = map.get_keys_and_values()
+    dyn = DynamicArray()
+    winner = done[0]
+    winner_count = winner[1]
+    for tuples in range(done.length()):
+        if done[tuples][1] == winner_count:
+            dyn.append(done[tuples][0])
+        if done[tuples][1] > winner_count:
+            dyn = DynamicArray()
+            dyn.append(done[tuples][0])
+            winner = done[tuples]
+            winner_count = winner[1]
+    return (dyn, winner_count)
 
 
 # ------------------- BASIC TESTING ---------------------------------------- #

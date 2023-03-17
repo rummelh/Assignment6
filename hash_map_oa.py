@@ -144,7 +144,7 @@ class HashMap:
                 j = 1
                 while temp_da[indexes] is not None:
                     if og_indexes + j ** 2 >= temp_da.length():
-                        indexes = (og_indexes + j ** 2) % self._capacity
+                        indexes = (og_indexes + j ** 2) % new_capacity
                     else:
                         indexes = og_indexes + j ** 2
                     j += 1

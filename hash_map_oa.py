@@ -91,13 +91,13 @@ class HashMap:
             self.resize_table(self._capacity *2)
         hash_entry = HashEntry(key, value)
         hash = self._hash_function(key)
-        index = hash % self._capacity
-        j = 0
+        index = hash % self._buckets.length()
+        j = 1
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
                 self._buckets[index] = hash_entry
                 return
-            index = (index + (j *j)) % (self._capacity - self._size)
+            index = (index + (j *j)) % self._capacity
             j +=1
         self._buckets[index] = hash_entry
         self._size +=1

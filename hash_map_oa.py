@@ -98,7 +98,7 @@ class HashMap:
             if self._buckets[index].key == key:
                 self._buckets[index] = hash_entry
                 return
-            if index + j**2 >= self._buckets.length():
+            if og_index + j**2 >= self._buckets.length():
                 index = (og_index + j **2) % self._capacity
             else:
                 index = og_index + j**2
@@ -140,13 +140,17 @@ class HashMap:
             if self._buckets[index] is not None:
                 hash = self._hash_function(self._buckets[index].key)
                 indexes = hash % new_capacity
+                og_indexes = hash % new_capacity
+                j = 1
                 while temp_da[indexes] is not None:
-                    indexes = (indexes + (j * j)) % temp_da.length()
+                    if og_indexes + j ** 2 >= temp_da.length():
+                        indexes = (og_indexes + j ** 2) % self._capacity
+                    else:
+                        indexes = og_indexes + j ** 2
                     j += 1
                 temp_da[indexes] = self._buckets[index]
         self._buckets = temp_da
         self._capacity = new_capacity
-
     def get(self, key: str) -> object:
         """
         TODO: Write this implementation

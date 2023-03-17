@@ -191,6 +191,8 @@ class HashMap:
         j = 1
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
+                if self._buckets[index].is_tombstone == True:
+                    return
                 self._buckets[index].is_tombstone = True
                 self._size -= 1
                 return

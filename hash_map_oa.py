@@ -196,10 +196,12 @@ class HashMap:
             self._buckets.append(None)
 
     def get_keys_and_values(self) -> DynamicArray:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """returns a dynamic array containing a tuple of  keys and values"""
+        new_arr = DynamicArray()
+        for indexs in range(self._buckets.length()):
+                if self._buckets[indexs] is not None:
+                    new_arr.append((self._buckets[indexs].key,self._buckets[indexs].value))
+        return new_arr
 
     def __iter__(self):
         """

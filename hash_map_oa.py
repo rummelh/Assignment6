@@ -92,12 +92,16 @@ class HashMap:
         hash_entry = HashEntry(key, value)
         hash = self._hash_function(key)
         index = hash % self._buckets.length()
+        og_index = hash % self._buckets.length()
         j = 1
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
                 self._buckets[index] = hash_entry
                 return
-            index = (index + (j *j)) % self._capacity
+            if index + j**2 >= self._buckets.length():
+                index = (og_index + j **2) % self._capacity
+            else:
+                index = og_index + j**2
             j +=1
         self._buckets[index] = hash_entry
         self._size +=1
@@ -111,6 +115,7 @@ class HashMap:
         return load_factor
 
     def empty_buckets(self) -> int:
+        """returns number of empty buckets"""
         count = 0
         for index in range(self._buckets.length()):
             if self._buckets[index] == None:
@@ -204,6 +209,26 @@ if __name__ == "__main__":
         m.put('str' + str(i // 3), i * 100)
         if i % 10 == 9:
             print(m.empty_buckets(), round(m.table_load(), 2), m.get_size(), m.get_capacity())
+
+    m = HashMap(53, hash_function_1)
+    m.put('str0', 0)
+    m.put('str1', 0)
+    m.put('str2', 0)
+    m.put('str3', 0)
+    m.put('str4', 0)
+    m.put('str5', 0)
+    m.put('str6', 0)
+    m.put('str7', 0)
+    m.put('str8', 0)
+    m.put('str9', 0)
+    m.put('str10', 0)
+    m.put('str11', 0)
+    m.put('str12', 0)
+    m.put('str13', 0)
+    m.put('str14', 0)
+    print(m)
+
+
 
     print("\nPDF - table_load example 1")
     print("--------------------------")

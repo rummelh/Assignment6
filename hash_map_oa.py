@@ -86,6 +86,7 @@ class HashMap:
     # ------------------------------------------------------------------ #
 
     def put(self, key: str, value: object) -> None:
+        """inserts value into hashmap"""
         load_factor = self.table_load()
         if load_factor >= 0.5:
             self.resize_table(self._capacity *2)
@@ -123,7 +124,7 @@ class HashMap:
         return count
 
     def resize_table(self, new_capacity: int) -> None:
-
+        """resizes table to double current capacity"""
         if new_capacity < self._size:
             return
         if new_capacity <1:
@@ -152,6 +153,7 @@ class HashMap:
         self._buckets = temp_da
         self._capacity = new_capacity
     def get(self, key: str) -> object:
+        """returns value given key"""
         hash = self._hash_function(key)
         index = hash % self._buckets.length()
         og_index = hash % self._buckets.length()
@@ -170,6 +172,7 @@ class HashMap:
 
 
     def contains_key(self, key: str) -> bool:
+        """returns true if key in hashmap and false otherwise"""
         hash = self._hash_function(key)
         index = hash % self._buckets.length()
         og_index = hash % self._buckets.length()
@@ -185,6 +188,7 @@ class HashMap:
         return False
 
     def remove(self, key: str) -> None:
+        """removes value from hashmap"""
         hash = self._hash_function(key)
         index = hash % self._buckets.length()
         og_index = hash % self._buckets.length()
@@ -221,16 +225,19 @@ class HashMap:
         return new_arr
 
     def __iter__(self):
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """interator method"""
+        self._indice = 0
+        return self
 
     def __next__(self):
-        """
-        TODO: Write this implementation
-        """
-        pass
+      while True:
+        try:
+            value = self._buckets[self._indice]
+        except DynamicArrayException:
+            raise StopIteration
+        self._indice = self._indice + 1
+        if value.is_tombstone == False:
+            return value
 
 
 # ------------------- BASIC TESTING ---------------------------------------- #

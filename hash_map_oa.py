@@ -187,8 +187,7 @@ class HashMap:
         index = hash % self._buckets.length()
         og_index = hash % self._buckets.length()
         j = 1
-        if self.get(key) is None:
-            return None
+
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
                 self._buckets[index].is_tombstone = True
@@ -199,6 +198,7 @@ class HashMap:
             else:
                 index = og_index + j ** 2
             j += 1
+        return None
 
 
     def clear(self) -> None:

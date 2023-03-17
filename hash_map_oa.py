@@ -230,14 +230,15 @@ class HashMap:
         return self
 
     def __next__(self):
-      while True:
+
         try:
             value = self._buckets[self._indice]
         except DynamicArrayException:
             raise StopIteration
-        self._indice = self._indice + 1
-        if value.is_tombstone == False:
+        if value.is_tombstone == True:
             return value
+        self._indice = self._indice + 1
+
 
 
 # ------------------- BASIC TESTING ---------------------------------------- #

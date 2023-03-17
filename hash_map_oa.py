@@ -158,6 +158,8 @@ class HashMap:
         j = 1
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
+                if self._buckets[index].is_tombstone == True:
+                    return None
                 return self._buckets[index].value
             if og_index + j ** 2 >= self._buckets.length():
                 index = (og_index + j ** 2) % self._capacity
@@ -187,7 +189,6 @@ class HashMap:
         index = hash % self._buckets.length()
         og_index = hash % self._buckets.length()
         j = 1
-
         while self._buckets[index] is not None:
             if self._buckets[index].key == key:
                 self._buckets[index].is_tombstone = True

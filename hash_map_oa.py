@@ -216,6 +216,8 @@ class HashMap:
         new_arr = DynamicArray()
         for indexs in range(self._buckets.length()):
                 if self._buckets[indexs] is not None:
+                    if self._buckets[indexs].is_tombstone == True:
+                        break
                     new_arr.append((self._buckets[indexs].key,self._buckets[indexs].value))
         return new_arr
 

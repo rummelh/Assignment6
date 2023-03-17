@@ -152,16 +152,35 @@ class HashMap:
         self._buckets = temp_da
         self._capacity = new_capacity
     def get(self, key: str) -> object:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        hash = self._hash_function(key)
+        index = hash % self._buckets.length()
+        og_index = hash % self._buckets.length()
+        j = 1
+        while self._buckets[index] is not None:
+            if self._buckets[index].key == key:
+                return self._buckets[index].value
+            if og_index + j ** 2 >= self._buckets.length():
+                index = (og_index + j ** 2) % self._capacity
+            else:
+                index = og_index + j ** 2
+            j += 1
+        return None
+
 
     def contains_key(self, key: str) -> bool:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        hash = self._hash_function(key)
+        index = hash % self._buckets.length()
+        og_index = hash % self._buckets.length()
+        j = 1
+        while self._buckets[index] is not None:
+            if self._buckets[index].key == key:
+                return True
+            if og_index + j ** 2 >= self._buckets.length():
+                index = (og_index + j ** 2) % self._capacity
+            else:
+                index = og_index + j ** 2
+            j += 1
+        return False
 
     def remove(self, key: str) -> None:
         """
@@ -170,10 +189,11 @@ class HashMap:
         pass
 
     def clear(self) -> None:
-        """
-        TODO: Write this implementation
-        """
-        pass
+        """clears hashmap"""
+        self._buckets = DynamicArray()
+        self._size = 0
+        for _ in range(self._capacity):
+            self._buckets.append(None)
 
     def get_keys_and_values(self) -> DynamicArray:
         """
